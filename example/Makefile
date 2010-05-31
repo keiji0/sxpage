@@ -18,8 +18,8 @@ clean: %tmp-clean
 	@echo "{ HTTP_PORT => $(HTTP_PORT) }" > $@.pl
 http-conf:
 	@lighttpd -f ./%config/lighttpd.conf -p
-http-stop: %tmp/lighttp-conf
+http-stop:
 	@[ -e %tmp/lighttpd.pid ] && kill `cat %tmp/lighttpd.pid`; return 0
-	make -s %tmp-clean
-http-start: http-stop
+	@make -s %tmp-clean
+http-start: http-stop %tmp/lighttp-conf
 	@lighttpd -f ./%config/lighttpd.conf -D &
